@@ -28,6 +28,7 @@ class AuthController(private val authService: AuthService) {
 
     @PostMapping("register")
     fun register(@RequestBody body: UserRegisterDTO): ResponseEntity<User> {
+
         return authService.register(body)
     }
 

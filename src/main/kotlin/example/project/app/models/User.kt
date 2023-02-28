@@ -8,13 +8,13 @@ import java.util.UUID
 import javax.persistence.*
 
 @Entity
+@Table(name = "users")
 class User {
 
     @Id
     @GeneratedValue()
     @Column(updatable = false, nullable = false, columnDefinition = "BINARY(16)")
     var id: UUID? = null
-
 
     @Column
     var username: String = ""
