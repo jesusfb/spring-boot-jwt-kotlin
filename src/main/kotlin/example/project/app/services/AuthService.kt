@@ -48,7 +48,6 @@ class AuthService (
             this.path = "/"
             this.maxAge = (jwtService.expiresInMs / 1000)
         }
-
         response.addCookie(cookie)
         return ResponseEntity.ok(LoginResponse(jwt))
     }

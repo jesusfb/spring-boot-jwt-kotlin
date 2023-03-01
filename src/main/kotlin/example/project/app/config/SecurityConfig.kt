@@ -22,18 +22,19 @@ class SecurityConfig(
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .cors().and()
-            .csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/api/**").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .exceptionHandling()
-            .authenticationEntryPoint(authEntryPoint)
-
-        http
+            .cors {}
+            .csrf { it ->
+                it.disable()
+            .authorizeRequests{
+                it.antMatchers("/api/**").permitAll()
+                it.anyRequest().authenticated()
+            }
+            .sessionManagement {
+                it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            }}
+            .exceptionHandling {
+                it.authenticationEntryPoint(authEntryPoint)
+            }
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
 
