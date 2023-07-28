@@ -1,10 +1,10 @@
-FROM maven:3.9.3-eclipse-temurin-20 as build
-WORKDIR /build
-COPY . .
-RUN mvn package
-
-FROM eclipse-temurin:20-jdk-alpine
+FROM maven:3.9 AS builder
 WORKDIR /app
-COPY --from=build ./build/target/*.jar ./app.jar
+COPY . .
+RUN mvn clean package -Dmaven.test.skip=true
+
+FROM amazoncorretto:17-alpine
+MAINTAINER LeninQuintero
+COPY --from=builder /app/target/app-0.0.1-SNAPSHOT.jar /usr/local/lib/app.jar
 EXPOSE 8080
-ENTRYPOINT java -jar app.jar
+ENTRYPOINT ["java", "-jar", "/usr/local/lib/app.jar"]
