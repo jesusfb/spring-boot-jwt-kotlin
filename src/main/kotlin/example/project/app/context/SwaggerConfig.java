@@ -1,4 +1,4 @@
-
+package example.project.app.config
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.models.OpenAPI;
